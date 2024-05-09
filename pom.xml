@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example</groupId>
-    <artifactId>CS157A</artifactId>
+    <artifactId>CS152</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>CS157A</name>
+    <name>CS152A</name>
     <packaging>war</packaging>
 
     <properties>

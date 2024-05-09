@@ -2,7 +2,6 @@ Status: implementing
 
 <br />
 <div align="center">
-  <a href="https://github.com/KhZaza/CS157A-Team9">
     <img src="src/main/webapp/images/Parts_logo.png" alt="Logo" width="120" height="120">
   </a>
 

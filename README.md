@@ -7,7 +7,6 @@ Status: implementing
   </a>
 
   <h2 align="center">Partly</h2>
-  <h3>CS157A-Team9</h3>
   <p align="center">
    Partly is a website that lets you find the car parts you need!
     <br />

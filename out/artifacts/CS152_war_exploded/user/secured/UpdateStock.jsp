@@ -1,13 +1,5 @@
 <%@ page import="java.util.Objects" %>
-<%@ page import="java.sql.*" %><%--
-
-
-  Created by IntelliJ IDEA.
-  User: ivanachen
-  Date: 11/19/23
-  Time: 3:42 AM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.sql.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>

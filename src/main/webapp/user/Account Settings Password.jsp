@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ivanachen
-  Date: 11/9/23
-  Time: 1:25 AM
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page import="java.sql.*"%>
 <%@ page import="at.favre.lib.crypto.bcrypt.BCrypt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>

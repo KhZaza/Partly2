@@ -4,13 +4,9 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.time.LocalDate" %>
-<%@ page import="java.util.Random" %><%--
-  Created by IntelliJ IDEA.
-  User: ivanachen
-  Date: 12/4/23
-  Time: 4:15 AM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.Random" %>
+<%@ page import="javax.servlet.*" %>
+<%@ page import="javax.servlet.http.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -33,6 +29,19 @@
         .cart-table {
             width: 100%;
             border-collapse: collapse;
+        }
+        .delete-button {
+            background-color: #f44336; /* Red background */
+            color: white;
+            padding: 10px 20px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background-color: #d32f2f; /* Darker red on hover */
         }
 
         .cart-table th, .cart-table td {
@@ -85,16 +94,12 @@
                 String usernameid = (String)sess2.getAttribute("user");
                 out.println("<a class=\"navbar-brand\" >Hi, " + usernameid + "</a>");
             %>
-
-
         </div>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="Account.html"><span class="glyphicon glyphicon-user"></span> Your Account</a></li>
             <li><a href="Home.html"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
             <li><a href="Cart.jsp"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
-
         </ul>
-    </div>
     </div>
 </nav>
 <%
@@ -108,7 +113,7 @@
 
     PreparedStatement psAccess = null;
     ResultSet rsAccess = null;
-    PreparedStatement  psCartID = null;
+    PreparedStatement psCartID = null;
     ResultSet rsCartID = null;
     PreparedStatement psData = null;
     PreparedStatement psBecomes = null;
@@ -123,7 +128,6 @@
     List<String> urlList = new ArrayList<>();
     List<Integer> idList = new ArrayList<>();
     List<Integer> qtyList = new ArrayList<>();
-
 
     String username = (String) session.getAttribute("user");
 
@@ -160,7 +164,6 @@
             psData = con.prepareStatement(queryJoin_PartAdd);
             psData.setString(1, cartID);
 
-
             ResultSet rsData = psData.executeQuery();
 
             while (rsData.next()) {
@@ -184,7 +187,6 @@
             psCartPrice.setInt(1,totalPrice);
             psCartPrice.execute();
             psCartPrice.close();
-
         }
 
         out.println("<div class='cart-container'>");
@@ -196,6 +198,7 @@
         out.println("<th>Price</th>");
         out.println("<th>Quantity</th>");
         out.println("<th>Total</th>");
+        out.println("<th>Action</th>");
         out.println("</tr>");
         out.println("</thead>");
         out.println("<tbody>");
@@ -206,7 +209,15 @@
             out.println("<td>$" + priceList.get(i) + "</td>");
             out.println("<td>" + qtyList.get(i) + "</td>");
             out.println("<td>$" + (priceList.get(i) * qtyList.get(i)) + "</td>");
-            //out.println("<td><button type='submit' class='checkout-button'>Delete</button></td>");
+            out.println("<td>");
+
+
+            out.println("<form method='post' action='/DeleteFromCartServlet'>");
+            out.println("<input type='hidden' name='partID' value='" + idList.get(i) + "'>");
+            out.println("<input type='hidden' name='cartID' value='" + cartID + "'>");
+            out.println("<button type='submit' class='delete-button'>Delete</button>");
+            out.println("</form>");
+            out.println("</td>");
             out.println("</tr>");
         }
 
@@ -220,25 +231,17 @@
         out.println("</div>");
         out.println("</div>");
 
-
-
-
-
     } catch (ClassNotFoundException | SQLException e) {
-        //System.out.println("error in Cart" + e);
-    }
-    finally{
-
-        try { if (psData != null) psData.close(); } catch (SQLException e) {e.printStackTrace(); }
-        try { if ( rsCartID != null)  rsCartID.close(); } catch (SQLException e) {e.printStackTrace(); }
-        try { if ( psCartID != null)  psCartID.close(); } catch (SQLException e) {e.printStackTrace(); }
-        try { if ( rsAccess != null)  rsAccess.close(); } catch (SQLException e) {e.printStackTrace(); }
-        try { if ( psAccess != null)  psAccess.close(); } catch (SQLException e) {e.printStackTrace(); }
-        try { if (con != null) con.close(); } catch (SQLException e) {e.printStackTrace(); }
-
+        e.printStackTrace();
+    } finally {
+        try { if (psData != null) psData.close(); } catch (SQLException e) { e.printStackTrace(); }
+        try { if (rsCartID != null) rsCartID.close(); } catch (SQLException e) { e.printStackTrace(); }
+        try { if (psCartID != null) psCartID.close(); } catch (SQLException e) { e.printStackTrace(); }
+        try { if (rsAccess != null) rsAccess.close(); } catch (SQLException e) { e.printStackTrace(); }
+        try { if (psAccess != null) psAccess.close(); } catch (SQLException e) { e.printStackTrace(); }
+        try { if (con != null) con.close(); } catch (SQLException e) { e.printStackTrace(); }
     }
 
 %>
-
 </body>
 </html>

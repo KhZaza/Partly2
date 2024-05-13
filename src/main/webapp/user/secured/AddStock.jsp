@@ -1,10 +1,4 @@
-<%@ page import="java.sql.*" %><%--
-  Created by IntelliJ IDEA.
-  User: ivanachen
-  Date: 11/15/23
-  Time: 1:27 AM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.sql.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="javax.servlet.http.HttpServletResponse" %>
 

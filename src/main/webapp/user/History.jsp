@@ -1,12 +1,6 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %><%--
-  Created by IntelliJ IDEA.
-  User: ivanachen
-  Date: 11/29/23
-  Time: 11:00 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -17,12 +11,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style>
         .navbar {
-            border-radius: 0; /* Remove border radius for a flat design */
-            margin-bottom: 0; /* Remove default bottom margin */
+            border-radius: 0;
+            margin-bottom: 0;
         }
         .navbar .container-fluid {
-            padding-left: 0; /* Remove padding for full width */
-            padding-right: 0; /* Remove padding for full width */
+            padding-left: 0;
+            padding-right: 0;
         }
     </style>
 </head>
@@ -52,7 +46,7 @@
     String admin = "root";
     String adminPassword = "cs157a@zaza";
 
-    PreparedStatement psAll = null; // query it all because of innerjoin
+    PreparedStatement psAll = null;
     Connection con = null;
     ResultSet rsData = null;
     String user = (String)session.getAttribute("user");
@@ -60,50 +54,28 @@
     List<Integer> qtyList = new ArrayList<>();
     List<Integer> orderIDList = new ArrayList<>();
     List<String> shippingList = new ArrayList<>();
-    List<Integer> totalPriceList = new ArrayList<>(); // incase want to see total price of the order
-    List<Integer> partPriceList = new ArrayList<>();
+    List<Double> priceList = new ArrayList<>();
     List<String> urlList = new ArrayList<>();
-    List<String> dateURL = new ArrayList<>();
-    int countRows = 0; // Using this instead of order#
+    List<String> dateList = new ArrayList<>();
+    int countRows = 0;
 
     try {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + db + "?autoReconnect=true&useSSL=false",
-                                            admin, adminPassword);
+        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + db + "?autoReconnect=true&useSSL=false", admin, adminPassword);
 
-       String queryData = "SELECT  \n" +
-               "    p.PartID AS PartID,\n" +
-               "    ad.QTY,\n" +
-               "    o.OrderID,\n" +
-               "    o.`shipping address`,\n" +
-               "    p.`Sell Price`,\n" +
-               "    ca.`Total Price`,\n" +
-               "    p.url,\n" +
-               "    b.Order_Date\n" +
-               "FROM Customer c\n" +
-               "INNER JOIN Access a ON c.Username = a.Username\n" +
-               "INNER JOIN Cart ca ON a.CartID = ca.CartID\n" +
-               "INNER JOIN Becomes b ON ca.CartID = b.CartID\n" +
-               "INNER JOIN `order` o ON b.OrderID = o.OrderID\n" +
-               "INNER JOIN `Added to` ad ON ca.CartID = ad.CartID\n" +
-               "INNER JOIN Part p ON ad.PartID = p.PartID\n" +
-               "WHERE c.username = ?\n" +
-               "ORDER BY OrderID DESC;\n";
-
+        String queryData = "SELECT * FROM order_history WHERE username = ? ORDER BY order_id DESC";
 
         psAll = con.prepareStatement(queryData);
-        psAll.setString(1,user);
+        psAll.setString(1, user);
         rsData = psAll.executeQuery();
         while(rsData.next()){
-            //Put everything into lists to print
-            partIDList.add(rsData.getInt("PartID"));
-            qtyList.add(rsData.getInt("QTY"));
-            orderIDList.add(rsData.getInt("OrderID"));
-            shippingList.add(rsData.getString("shipping address"));
-            partPriceList.add(rsData.getInt("sell price"));
-            totalPriceList.add(rsData.getInt("Total Price")); // currently wrong in db since cart not work
+            partIDList.add(rsData.getInt("part_id"));
+            qtyList.add(rsData.getInt("qty"));
+            orderIDList.add(rsData.getInt("order_id"));
+            shippingList.add(rsData.getString("shipping_address"));
+            priceList.add(rsData.getDouble("price"));
             urlList.add(rsData.getString("url"));
-            dateURL.add(rsData.getString("Order_Date"));
+            dateList.add(rsData.getString("order_date"));
             countRows++;
         }
 
@@ -111,41 +83,35 @@
             out.println("<div class=\"container\">\n" +
                     "    <h1 class=\"my-3\">No history available</h1>\n" +
                     "</div>");
+        } else {
+            out.println("<div class=\"container\">\n" +
+                    "    <h1 class=\"my-3\">Complete Order History</h1>");
+            for(int i = 0; i < countRows; i++){
+                out.println("<div class=\"card mb-3\">\n" +
+                        "    <div class=\"card-header bg-primary text-white\">\n" +
+                        "        Order " + orderIDList.get(i) + " - " +
+                        "Shipping Address: " + shippingList.get(i) + " - " +
+                        "Ordered Date: " + dateList.get(i) + "\n" +
+                        "    </div>\n" +
+                        "    <ul class=\"list-group list-group-flush\">\n" +
+                        "        <li class=\"list-group-item\">\n" +
+                        "            <img src=\"" + urlList.get(i) + "\" alt=\"Item\" style=\"width:100px;\">\n" +
+                        "            Item " + partIDList.get(i) + " - $" + priceList.get(i) + " - QTY: " + qtyList.get(i) +
+                        "        </li>\n" +
+                        "    </ul>\n" +
+                        "</div>");
+            }
+            out.println("</div>");
         }
-
-        out.println("<div class=\"container\">\n" +
-                "    <h1 class=\"my-3\">Complete Order History</h1>");
-        //Print everything out using a loop, using the number of rows
-        for(int i = 0; i < countRows; i++){
-            out.println( "<div class=\"card mb-3\">\n" +
-                    "        <div class=\"card-header bg-primary text-white\">\n" +
-                    "            Order " + orderIDList.get(i) + "-" +
-                    "Shipping Address: " + shippingList.get(i) + "-" +
-                    "Ordered Date: " + dateURL.get(i) + "-" +
-                    "        </div>\n" +
-                    "        <ul class=\"list-group list-group-flush\">\n" +
-                    "            <li class=\"list-group-item\">\n" +
-                    "                <img src= \"" + urlList.get(i) + "\"" +
-                    "alt=\"Item 1\" " +
-                    "style=\"width:100px;\">\n" +
-                    "                Item " + partIDList.get(i) + " - $" +
-                    partPriceList.get(i) + "- QTY: " + qtyList.get(i) +
-                    "  </li> </ul>  </div>");
-        }
-        out.println("</div>"); // container
-
 
     } catch (ClassNotFoundException | SQLException e) {
-        System.out.println("error in History Stock" + e) ;
-    }
-    finally {
-        //close in opposite order bc resources dependecy order
-        try { if (rsData != null) rsData .close(); } catch (SQLException e) {e.printStackTrace(); }
-        try { if (psAll != null) psAll.close(); } catch (SQLException e) {e.printStackTrace(); }
+        System.out.println("error in History Stock: " + e);
+    } finally {
+        try { if (rsData != null) rsData.close(); } catch (SQLException e) { e.printStackTrace(); }
+        try { if (psAll != null) psAll.close(); } catch (SQLException e) { e.printStackTrace(); }
         try { if (con != null) con.close(); } catch (SQLException e) { e.printStackTrace(); }
     }
 %>
-
 
 </body>
 </html>

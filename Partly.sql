@@ -25,12 +25,12 @@ DROP TABLE IF EXISTS `access`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `access` (
-  `Username` varchar(45) NOT NULL,
-  `CartID` varchar(45) NOT NULL,
-  `currentCart` int DEFAULT '0',
-  KEY `CartID_A_idx` (`CartID`),
-  KEY `username_idx` (`Username`),
-  CONSTRAINT `Username_A` FOREIGN KEY (`Username`) REFERENCES `customer` (`Username`) ON DELETE CASCADE ON UPDATE CASCADE
+                          `Username` varchar(45) NOT NULL,
+                          `CartID` varchar(45) NOT NULL,
+                          `currentCart` int DEFAULT '0',
+                          KEY `CartID_A_idx` (`CartID`),
+                          KEY `username_idx` (`Username`),
+                          CONSTRAINT `Username_A` FOREIGN KEY (`Username`) REFERENCES `customer` (`Username`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -52,13 +52,13 @@ DROP TABLE IF EXISTS `added to`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `added to` (
-  `PartID` int NOT NULL,
-  `CartID` varchar(45) NOT NULL,
-  `Qty` int NOT NULL DEFAULT '1' COMMENT 'Default is always 1 since you always just add one item to the cart unless you specify the amount. ',
-  KEY `PartID_Ad_idx` (`PartID`),
-  KEY `CartID_Ad_idx` (`CartID`),
-  CONSTRAINT `CartID_Ad` FOREIGN KEY (`CartID`) REFERENCES `cart` (`CartID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `PartID_AD` FOREIGN KEY (`PartID`) REFERENCES `part` (`PartID`)
+                            `PartID` int NOT NULL,
+                            `CartID` varchar(45) NOT NULL,
+                            `Qty` int NOT NULL DEFAULT '1' COMMENT 'Default is always 1 since you always just add one item to the cart unless you specify the amount. ',
+                            KEY `PartID_Ad_idx` (`PartID`),
+                            KEY `CartID_Ad_idx` (`CartID`),
+                            CONSTRAINT `CartID_Ad` FOREIGN KEY (`CartID`) REFERENCES `cart` (`CartID`) ON DELETE CASCADE ON UPDATE CASCADE,
+                            CONSTRAINT `PartID_AD` FOREIGN KEY (`PartID`) REFERENCES `part` (`PartID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -80,11 +80,11 @@ DROP TABLE IF EXISTS `admin`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `admin` (
-  `AdminID` varchar(45) NOT NULL,
-  `Name` varchar(45) NOT NULL,
-  `Role` varchar(45) NOT NULL,
-  `Password` varchar(45) NOT NULL,
-  PRIMARY KEY (`AdminID`)
+                         `AdminID` varchar(45) NOT NULL,
+                         `Name` varchar(45) NOT NULL,
+                         `Role` varchar(45) NOT NULL,
+                         `Password` varchar(45) NOT NULL,
+                         PRIMARY KEY (`AdminID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -106,13 +106,13 @@ DROP TABLE IF EXISTS `becomes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `becomes` (
-  `CartID` varchar(45) NOT NULL,
-  `OrderID` int NOT NULL,
-  `Order_Date` varchar(45) DEFAULT NULL,
-  KEY `CartID_idx` (`CartID`),
-  KEY `OrderID_idx` (`OrderID`),
-  CONSTRAINT `CartID` FOREIGN KEY (`CartID`) REFERENCES `cart` (`CartID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `OrderID` FOREIGN KEY (`OrderID`) REFERENCES `order` (`OrderID`)
+                           `CartID` varchar(45) NOT NULL,
+                           `OrderID` int NOT NULL,
+                           `Order_Date` varchar(45) DEFAULT NULL,
+                           KEY `CartID_idx` (`CartID`),
+                           KEY `OrderID_idx` (`OrderID`),
+                           CONSTRAINT `CartID` FOREIGN KEY (`CartID`) REFERENCES `cart` (`CartID`) ON DELETE CASCADE ON UPDATE CASCADE,
+                           CONSTRAINT `OrderID` FOREIGN KEY (`OrderID`) REFERENCES `order` (`OrderID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -134,9 +134,9 @@ DROP TABLE IF EXISTS `cart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cart` (
-  `CartID` varchar(45) NOT NULL,
-  `Total Price` int DEFAULT '-1',
-  PRIMARY KEY (`CartID`)
+                        `CartID` varchar(45) NOT NULL,
+                        `Total Price` int DEFAULT '-1',
+                        PRIMARY KEY (`CartID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -158,9 +158,9 @@ DROP TABLE IF EXISTS `Cookies`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Cookies` (
-  `Username` varchar(255) NOT NULL,
-  `SessionToken` varchar(255) NOT NULL,
-  PRIMARY KEY (`Username`)
+                           `Username` varchar(255) NOT NULL,
+                           `SessionToken` varchar(255) NOT NULL,
+                           PRIMARY KEY (`Username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -182,13 +182,13 @@ DROP TABLE IF EXISTS `customer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customer` (
-  `Username` varchar(45) NOT NULL,
-  `FName` varchar(45) NOT NULL,
-  `LName` varchar(45) NOT NULL,
-  `Email` varchar(45) NOT NULL,
-  `Password` varchar(255) NOT NULL,
-  `Address` varchar(255) NOT NULL,
-  PRIMARY KEY (`Username`)
+                            `Username` varchar(45) NOT NULL,
+                            `FName` varchar(45) NOT NULL,
+                            `LName` varchar(45) NOT NULL,
+                            `Email` varchar(45) NOT NULL,
+                            `Password` varchar(255) NOT NULL,
+                            `Address` varchar(255) NOT NULL,
+                            PRIMARY KEY (`Username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -210,10 +210,10 @@ DROP TABLE IF EXISTS `feedback`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `feedback` (
-  `FeedbackID` int NOT NULL AUTO_INCREMENT,
-  `Subject` varchar(45) DEFAULT NULL,
-  `Body` varchar(1000) DEFAULT NULL,
-  PRIMARY KEY (`FeedbackID`)
+                            `FeedbackID` int NOT NULL AUTO_INCREMENT,
+                            `Subject` varchar(45) DEFAULT NULL,
+                            `Body` varchar(1000) DEFAULT NULL,
+                            PRIMARY KEY (`FeedbackID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -235,12 +235,12 @@ DROP TABLE IF EXISTS `gives`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `gives` (
-  `Username` varchar(45) DEFAULT NULL,
-  `FeedbackID` int DEFAULT NULL,
-  KEY `Username_idx` (`Username`),
-  KEY `FeedbackID_idx` (`FeedbackID`),
-  CONSTRAINT `FeedbackID` FOREIGN KEY (`FeedbackID`) REFERENCES `feedback` (`FeedbackID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `Username` FOREIGN KEY (`Username`) REFERENCES `customer` (`Username`)
+                         `Username` varchar(45) DEFAULT NULL,
+                         `FeedbackID` int DEFAULT NULL,
+                         KEY `Username_idx` (`Username`),
+                         KEY `FeedbackID_idx` (`FeedbackID`),
+                         CONSTRAINT `FeedbackID` FOREIGN KEY (`FeedbackID`) REFERENCES `feedback` (`FeedbackID`) ON DELETE CASCADE ON UPDATE CASCADE,
+                         CONSTRAINT `Username` FOREIGN KEY (`Username`) REFERENCES `customer` (`Username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -262,13 +262,13 @@ DROP TABLE IF EXISTS `manage`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `manage` (
-  `AdminID` varchar(255) NOT NULL,
-  `QTY` int NOT NULL DEFAULT '1',
-  `PartID` int DEFAULT NULL,
-  KEY `AdminID_idx` (`AdminID`),
-  KEY `PartID2_idx` (`PartID`),
-  CONSTRAINT `AdminID` FOREIGN KEY (`AdminID`) REFERENCES `admin` (`AdminID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `PartID` FOREIGN KEY (`PartID`) REFERENCES `part` (`PartID`)
+                          `AdminID` varchar(255) NOT NULL,
+                          `QTY` int NOT NULL DEFAULT '1',
+                          `PartID` int DEFAULT NULL,
+                          KEY `AdminID_idx` (`AdminID`),
+                          KEY `PartID2_idx` (`PartID`),
+                          CONSTRAINT `AdminID` FOREIGN KEY (`AdminID`) REFERENCES `admin` (`AdminID`) ON DELETE CASCADE ON UPDATE CASCADE,
+                          CONSTRAINT `PartID` FOREIGN KEY (`PartID`) REFERENCES `part` (`PartID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -290,14 +290,14 @@ DROP TABLE IF EXISTS `order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order` (
-  `OrderID` int NOT NULL AUTO_INCREMENT,
-  `Contact Info` varchar(45) DEFAULT NULL,
-  `Shipping Address` varchar(100) DEFAULT NULL,
-  `CustomerID` varchar(255) DEFAULT NULL,
-  `Status` varchar(45) DEFAULT 'Pending',
-  PRIMARY KEY (`OrderID`),
-  KEY `CustomerID` (`CustomerID`),
-  CONSTRAINT `CustomerID` FOREIGN KEY (`CustomerID`) REFERENCES `customer` (`Username`) ON DELETE CASCADE ON UPDATE CASCADE
+                         `OrderID` int NOT NULL AUTO_INCREMENT,
+                         `Contact Info` varchar(45) DEFAULT NULL,
+                         `Shipping Address` varchar(100) DEFAULT NULL,
+                         `CustomerID` varchar(255) DEFAULT NULL,
+                         `Status` varchar(45) DEFAULT 'Pending',
+                         PRIMARY KEY (`OrderID`),
+                         KEY `CustomerID` (`CustomerID`),
+                         CONSTRAINT `CustomerID` FOREIGN KEY (`CustomerID`) REFERENCES `customer` (`Username`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -319,16 +319,16 @@ DROP TABLE IF EXISTS `order_history`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order_history` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) NOT NULL,
-  `order_id` int NOT NULL,
-  `part_id` int NOT NULL,
-  `qty` int NOT NULL,
-  `price` decimal(10,2) NOT NULL,
-  `shipping_address` varchar(255) NOT NULL,
-  `order_date` date NOT NULL,
-  `url` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+                                 `id` int NOT NULL AUTO_INCREMENT,
+                                 `username` varchar(255) NOT NULL,
+                                 `order_id` int NOT NULL,
+                                 `part_id` int NOT NULL,
+                                 `qty` int NOT NULL,
+                                 `price` decimal(10,2) NOT NULL,
+                                 `shipping_address` varchar(255) NOT NULL,
+                                 `order_date` date NOT NULL,
+                                 `url` varchar(255) DEFAULT NULL,
+                                 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -350,13 +350,13 @@ DROP TABLE IF EXISTS `part`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `part` (
-  `PartID` int NOT NULL AUTO_INCREMENT,
-  `Category` varchar(45) NOT NULL,
-  `Name` varchar(45) NOT NULL,
-  `Sell Price` int NOT NULL,
-  `Description` varchar(255) NOT NULL,
-  `URL` varchar(255) NOT NULL,
-  PRIMARY KEY (`PartID`)
+                        `PartID` int NOT NULL AUTO_INCREMENT,
+                        `Category` varchar(45) NOT NULL,
+                        `Name` varchar(45) NOT NULL,
+                        `Sell Price` int NOT NULL,
+                        `Description` varchar(255) NOT NULL,
+                        `URL` varchar(255) NOT NULL,
+                        PRIMARY KEY (`PartID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -378,13 +378,13 @@ DROP TABLE IF EXISTS `review`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `review` (
-  `AdminID` varchar(255) NOT NULL,
-  `FeedbackID` int NOT NULL,
-  `Completed` int NOT NULL DEFAULT '0' COMMENT 'Default is 0 for False because assume that all the feedback reports have not been read yet. An Admin will make it 1 if it’s completed. ',
-  KEY `AdminID_R_idx` (`AdminID`),
-  KEY `FeedbackID_R_idx` (`FeedbackID`),
-  CONSTRAINT `AdminID_R` FOREIGN KEY (`AdminID`) REFERENCES `admin` (`AdminID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FeedbackID_R` FOREIGN KEY (`FeedbackID`) REFERENCES `feedback` (`FeedbackID`)
+                          `AdminID` varchar(255) NOT NULL,
+                          `FeedbackID` int NOT NULL,
+                          `Completed` int NOT NULL DEFAULT '0' COMMENT 'Default is 0 for False because assume that all the feedback reports have not been read yet. An Admin will make it 1 if it’s completed. ',
+                          KEY `AdminID_R_idx` (`AdminID`),
+                          KEY `FeedbackID_R_idx` (`FeedbackID`),
+                          CONSTRAINT `AdminID_R` FOREIGN KEY (`AdminID`) REFERENCES `admin` (`AdminID`) ON DELETE CASCADE ON UPDATE CASCADE,
+                          CONSTRAINT `FeedbackID_R` FOREIGN KEY (`FeedbackID`) REFERENCES `feedback` (`FeedbackID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -406,13 +406,13 @@ DROP TABLE IF EXISTS `search`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `search` (
-  `Username` varchar(45) NOT NULL,
-  `PartID` int DEFAULT NULL,
-  KEY `Username_S_idx` (`Username`),
-  KEY `PartID_idx` (`PartID`),
-  KEY `PartID_search_idx` (`PartID`),
-  CONSTRAINT `PartID_search` FOREIGN KEY (`PartID`) REFERENCES `part` (`PartID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `Username_S` FOREIGN KEY (`Username`) REFERENCES `customer` (`Username`)
+                          `Username` varchar(45) NOT NULL,
+                          `PartID` int DEFAULT NULL,
+                          KEY `Username_S_idx` (`Username`),
+                          KEY `PartID_idx` (`PartID`),
+                          KEY `PartID_search_idx` (`PartID`),
+                          CONSTRAINT `PartID_search` FOREIGN KEY (`PartID`) REFERENCES `part` (`PartID`) ON DELETE CASCADE ON UPDATE CASCADE,
+                          CONSTRAINT `Username_S` FOREIGN KEY (`Username`) REFERENCES `customer` (`Username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -434,13 +434,13 @@ DROP TABLE IF EXISTS `view`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `view` (
-  `Username` varchar(45) NOT NULL,
-  `OrderID` int NOT NULL,
-  `Status` varchar(45) NOT NULL DEFAULT 'not shipped',
-  KEY `Username_idx` (`Username`),
-  KEY `OrderIDs_idx` (`OrderID`),
-  CONSTRAINT `OrderIDs` FOREIGN KEY (`OrderID`) REFERENCES `order` (`OrderID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `Usernames` FOREIGN KEY (`Username`) REFERENCES `customer` (`Username`)
+                        `Username` varchar(45) NOT NULL,
+                        `OrderID` int NOT NULL,
+                        `Status` varchar(45) NOT NULL DEFAULT 'not shipped',
+                        KEY `Username_idx` (`Username`),
+                        KEY `OrderIDs_idx` (`OrderID`),
+                        CONSTRAINT `OrderIDs` FOREIGN KEY (`OrderID`) REFERENCES `order` (`OrderID`) ON DELETE CASCADE ON UPDATE CASCADE,
+                        CONSTRAINT `Usernames` FOREIGN KEY (`Username`) REFERENCES `customer` (`Username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

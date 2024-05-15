@@ -264,26 +264,25 @@ body, html {
     position: relative;
 }
 
+
+/* Assuming this is part of your CSS */
 .bg-img::before {
     content: "";
     background-image: url("https://cimg4.ibsrv.net/gimg/rennlist.com-vbulletin/1567x934/m3mainpic_6c5a95b44b63582c9da3aa3519eb853e1fc10c65.png");
-
-    /* Stretch the pseudo-element to cover the whole container */
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-
-    /* Blur effect */
-    filter: blur(3px);
-
-    /* Center and scale the image nicely */
-    background-position: center;
-    background-repeat: no-repeat;
     background-size: cover;
-    z-index: -1; /* Position it below any content inside the .bg-img container */
+    background-position: center;
+    position: absolute;
+    filter: blur(2px);
+
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.5;
 }
+
+/* Additional CSS styles */
 
 
 
